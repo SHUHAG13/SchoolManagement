@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using SchoolManagement.Domain.Interfaces;
 using SchoolManagement.Infrastructure.Data;
+using SchoolManagement.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,7 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<SchoolDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
+builder.Services.AddTransient<IStudentRepository,StudentRepository>();
+builder.Services.AddTransient<ICourseRepository, CourseRepository>();
 
 var app = builder.Build();
 
